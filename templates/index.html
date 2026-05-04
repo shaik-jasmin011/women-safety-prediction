@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – Home{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero__bg-orbs">
+    <div class="orb orb--1"></div>
+    <div class="orb orb--2"></div>
+    <div class="orb orb--3"></div>
+  </div>
+  <div class="container hero__content">
+    <div class="hero__text">
+      <div class="hero__badge">
+        <span class="badge-dot"></span>
+        Smart Safety System Active
+      </div>
+      <h1 class="hero__title">Your Safety,<br /><span class="gradient-text">Our Priority</span></h1>
+      <p class="hero__subtitle">
+        SafeHer empowers women with real-time alerts, live location sharing,
+        emergency contact management, and AI-powered danger detection — all in one place.
+      </p>
+      <div class="hero__cta">
+        <a href="{{ url_for('sos') }}" class="btn btn--primary"><span>🚨</span> Activate SOS</a>
+        <a href="{{ url_for('location') }}" class="btn btn--ghost"><span>📍</span> Track Location</a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <div class="hero__shield-wrapper">
+        <div class="shield-glow"></div>
+        <div class="hero__shield">
+          <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="shield-svg">
+            <path d="M100 10L20 45V105C20 155 54 198 100 212C146 198 180 155 180 105V45L100 10Z" fill="url(#heroShield)" opacity="0.15"/>
+            <path d="M100 10L20 45V105C20 155 54 198 100 212C146 198 180 155 180 105V45L100 10Z" stroke="url(#heroShieldStroke)" stroke-width="2" fill="none"/>
+            <circle cx="100" cy="100" r="30" fill="url(#innerCircle)" opacity="0.8"/>
+            <text x="100" y="110" text-anchor="middle" font-size="28" fill="white">♀</text>
+            <defs>
+              <linearGradient id="heroShield" x1="20" y1="10" x2="180" y2="212" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#c084fc"/><stop offset="1" stop-color="#f472b6"/>
+              </linearGradient>
+              <linearGradient id="heroShieldStroke" x1="20" y1="10" x2="180" y2="212" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#c084fc"/><stop offset="1" stop-color="#f472b6"/>
+              </linearGradient>
+              <radialGradient id="innerCircle" cx="50%" cy="50%" r="50%">
+                <stop stop-color="#c084fc" stop-opacity="0.8"/>
+                <stop offset="1" stop-color="#f472b6" stop-opacity="0.4"/>
+              </radialGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="hero__stats">
+        <div class="stat-card"><div class="stat-icon">🛡️</div><div class="stat-info"><strong>100%</strong><span>Secure</span></div></div>
+        <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><strong>Instant</strong><span>Alerts</span></div></div>
+        <div class="stat-card"><div class="stat-icon">🤖</div><div class="stat-info"><strong>AI</strong><span>Powered</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE CARDS -->
+<section class="section">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">Features</span>
+      <h2 class="section__title">Everything You Need to Stay Safe</h2>
+      <p class="section__desc">Quick access to all safety features in one place.</p>
+    </div>
+    <div class="tips__grid">
+      <a href="{{ url_for('sos') }}" class="tip-card" style="text-decoration:none;cursor:pointer;">
+        <div class="tip-card__icon">🚨</div>
+        <div class="tip-card__title">SOS Alert</div>
+        <div class="tip-card__text">Hold 3 seconds to send emergency alert with your location to all contacts.</div>
+      </a>
+      <a href="{{ url_for('location') }}" class="tip-card" style="text-decoration:none;cursor:pointer;">
+        <div class="tip-card__icon">📍</div>
+        <div class="tip-card__title">Live Location</div>
+        <div class="tip-card__text">Share your real-time GPS location with trusted contacts via WhatsApp or link.</div>
+      </a>
+      <a href="{{ url_for('contacts') }}" class="tip-card" style="text-decoration:none;cursor:pointer;">
+        <div class="tip-card__icon">📞</div>
+        <div class="tip-card__title">Emergency Contacts</div>
+        <div class="tip-card__text">Add trusted people who get notified instantly during an SOS event.</div>
+      </a>
+      <a href="{{ url_for('ai_detect') }}" class="tip-card" style="text-decoration:none;cursor:pointer;">
+        <div class="tip-card__icon">🤖</div>
+        <div class="tip-card__title">AI Danger Detection</div>
+        <div class="tip-card__text">Type or speak your situation. AI analyzes keywords to detect threat level.</div>
+      </a>
+      <a href="{{ url_for('tips') }}" class="tip-card" style="text-decoration:none;cursor:pointer;">
+        <div class="tip-card__icon">📚</div>
+        <div class="tip-card__title">Safety Tips</div>
+        <div class="tip-card__text">Learn safety awareness tips and test yourself with our safety knowledge quiz.</div>
+      </a>
+      <div class="tip-card">
+        <div class="tip-card__icon">🔒</div>
+        <div class="tip-card__title">Private & Secure</div>
+        <div class="tip-card__text">Your data stays on your device. No tracking. No data collection.</div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

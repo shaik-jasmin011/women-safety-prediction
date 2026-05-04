@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – SOS Alert{% endblock %}
+
+{% block content %}
+<section class="section" id="sos" style="min-height:90vh;padding-top:6rem;">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">Emergency</span>
+      <h2 class="section__title">🚨 SOS Alert System</h2>
+      <p class="section__desc">Press and hold the SOS button for 3 seconds to trigger an emergency alert with your location.</p>
+    </div>
+
+    <div class="sos__layout">
+      <div class="sos__button-area">
+        <div class="sos__rings">
+          <div class="sos-ring ring-1"></div>
+          <div class="sos-ring ring-2"></div>
+          <div class="sos-ring ring-3"></div>
+          <button
+            class="sos__btn"
+            id="sosBtn"
+            onmousedown="startSosHold()"
+            onmouseup="cancelSosHold()"
+            onmouseleave="cancelSosHold()"
+            ontouchstart="startSosHold()"
+            ontouchend="cancelSosHold()"
+            aria-label="SOS Emergency Button"
+          >
+            <span class="sos__btn-icon">🆘</span>
+            <span class="sos__btn-text">HOLD FOR SOS</span>
+            <div class="sos__progress" id="sosProgress"></div>
+          </button>
+        </div>
+        <p class="sos__hint" id="sosHint">Hold for <strong>3 seconds</strong> to activate</p>
+      </div>
+
+      <div class="sos__info">
+        <div class="sos__status-card" id="sosStatusCard">
+          <div class="status-indicator" id="statusIndicator">
+            <div class="status-dot status-dot--idle"></div>
+            <span id="statusText">System Ready</span>
+          </div>
+          <div class="sos__log" id="sosLog">
+            <div class="log-entry log-entry--info">
+              <span class="log-time" id="logTime">--:--:--</span>
+              <span>Awaiting activation…</span>
+            </div>
+          </div>
+        </div>
+
+        {% if contacts %}
+        <div class="sos__status-card" style="margin-top:1rem;">
+          <p style="color:#94a3b8;font-size:.85rem;margin-bottom:.8rem;">📋 Will alert {{ contacts|length }} contact(s):</p>
+          {% for c in contacts %}
+          <div style="display:flex;justify-content:space-between;font-size:.85rem;padding:.4rem 0;border-bottom:1px solid rgba(255,255,255,.06);">
+            <span>{{ c.name }}</span><span style="color:#94a3b8;">{{ c.phone }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="sos__status-card" style="margin-top:1rem;text-align:center;">
+          <p style="color:#64748b;font-size:.85rem;">No emergency contacts added yet.</p>
+          <a href="{{ url_for('contacts') }}" class="btn btn--secondary" style="margin-top:.8rem;display:inline-flex;">➕ Add Contacts</a>
+        </div>
+        {% endif %}
+
+        <div class="sos__features">
+          <div class="feature-item">
+            <div class="feature-icon">📍</div>
+            <div><strong>GPS Location</strong><p>Automatically captures & shares your live coordinates</p></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📱</div>
+            <div><strong>Contact Alert</strong><p>Notifies all your emergency contacts instantly</p></div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🔔</div>
+            <div><strong>Audio Alarm</strong><p>Triggers a loud alarm to attract nearby attention</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOS OVERLAY -->
+<div class="sos__overlay" id="sosOverlay" style="display:none;">
+  <div class="sos__overlay-content">
+    <div class="sos__overlay-icon">🚨</div>
+    <h2>SOS ACTIVATED!</h2>
+    <p>Emergency alert sent to all your contacts.</p>
+    <div class="sos__overlay-location" id="sosLocation"></div>
+    <button class="btn btn--ghost" onclick="dismissSOS()" id="dismissSosBtn">✕ Cancel SOS</button>
+  </div>
+</div>
+{% endblock %}

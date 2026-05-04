@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}SafeHer – Women's Safety System{% endblock %}</title>
+  <meta name="description" content="SafeHer is a smart safety web app with SOS alerts, live location sharing, emergency contacts, AI danger detection, and safety tips." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <a class="nav__brand" href="{{ url_for('home') }}" style="text-decoration:none;">
+        <div class="nav__logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 3L4 10V21C4 29.8 11 38.1 20 40C29 38.1 36 29.8 36 21V10L20 3Z" fill="url(#shieldGrad)" />
+            <circle cx="20" cy="19" r="5" fill="white" opacity="0.9"/>
+            <line x1="20" y1="24" x2="20" y2="29" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="16" y1="27" x2="24" y2="27" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="shieldGrad" x1="4" y1="3" x2="36" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#c084fc"/><stop offset="1" stop-color="#f472b6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="nav__title">SafeHer</span>
+      </a>
+
+      <ul class="nav__links" id="navLinks">
+        <li><a href="{{ url_for('home') }}" class="nav__link {% if active=='home' %}active{% endif %}">Home</a></li>
+        <li><a href="{{ url_for('sos') }}" class="nav__link {% if active=='sos' %}active{% endif %}">🚨 SOS</a></li>
+        <li><a href="{{ url_for('location') }}" class="nav__link {% if active=='location' %}active{% endif %}">📍 Location</a></li>
+        <li><a href="{{ url_for('contacts') }}" class="nav__link {% if active=='contacts' %}active{% endif %}">📞 Contacts</a></li>
+        <li><a href="{{ url_for('ai_detect') }}" class="nav__link {% if active=='ai' %}active{% endif %}">🤖 AI Detect</a></li>
+        <li><a href="{{ url_for('tips') }}" class="nav__link {% if active=='tips' %}active{% endif %}">📚 Tips</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <a href="{{ url_for('sos') }}" class="btn-sos-mini">🆘 SOS</a>
+        <button class="nav__hamburger" id="hamburgerBtn" aria-label="Toggle menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="nav__logo-icon" style="width:36px;height:36px;">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M20 3L4 10V21C4 29.8 11 38.1 20 40C29 38.1 36 29.8 36 21V10L20 3Z" fill="url(#footShield)"/><circle cx="20" cy="19" r="5" fill="white" opacity="0.9"/><line x1="20" y1="24" x2="20" y2="29" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="27" x2="24" y2="27" stroke="white" stroke-width="2.5" stroke-linecap="round"/><defs><linearGradient id="footShield" x1="4" y1="3" x2="36" y2="40"><stop stop-color="#c084fc"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs></svg>
+          </div>
+          <div><h4>SafeHer</h4><p>Every woman deserves to feel safe.</p></div>
+        </div>
+        <div class="footer__emergency">
+          <p>🆘 Emergency Hotlines</p>
+          <div class="footer__hotlines">
+            <a href="tel:100">Police: 100</a>
+            <a href="tel:1091">Women: 1091</a>
+            <a href="tel:112">Emergency: 112</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>Built with ❤️ for women's safety. Always trust your instincts.</p>
+        <p class="footer__disclaimer">⚠️ This app is a safety aid. Always contact local authorities in life-threatening situations.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast__container" id="toastContainer"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

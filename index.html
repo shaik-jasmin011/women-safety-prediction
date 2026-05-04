@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SafeHer – Women's Safety System</title>
+  <meta name="description" content="SafeHer is a smart safety web app with SOS alerts, live location tracking, emergency contacts, AI danger detection, and safety tips to protect women in emergencies." />
+  <meta name="keywords" content="women safety, SOS alert, emergency contacts, location tracking, safety tips" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== HEADER / NAVBAR ===== -->
+  <header class="header" id="header">
+    <nav class="nav container">
+      <div class="nav__brand">
+        <div class="nav__logo-icon">
+          <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 3L4 10V21C4 29.8 11 38.1 20 40C29 38.1 36 29.8 36 21V10L20 3Z" fill="url(#shieldGrad)" />
+            <circle cx="20" cy="19" r="5" fill="white" opacity="0.9"/>
+            <line x1="20" y1="24" x2="20" y2="29" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="16" y1="27" x2="24" y2="27" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="shieldGrad" x1="4" y1="3" x2="36" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#c084fc"/>
+                <stop offset="1" stop-color="#f472b6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="nav__title">SafeHer</span>
+      </div>
+
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#home" class="nav__link active" id="nav-home">Home</a></li>
+        <li><a href="#sos" class="nav__link" id="nav-sos">SOS</a></li>
+        <li><a href="#location" class="nav__link" id="nav-location">Location</a></li>
+        <li><a href="#contacts" class="nav__link" id="nav-contacts">Contacts</a></li>
+        <li><a href="#ai-detect" class="nav__link" id="nav-ai">AI Detect</a></li>
+        <li><a href="#tips" class="nav__link" id="nav-tips">Safety Tips</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button class="btn-sos-mini pulse-ring" id="sosMiniBtn" onclick="triggerSOS()">🆘 SOS</button>
+        <button class="nav__hamburger" id="hamburgerBtn" aria-label="Toggle menu" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="home">
+    <div class="hero__bg-orbs">
+      <div class="orb orb--1"></div>
+      <div class="orb orb--2"></div>
+      <div class="orb orb--3"></div>
+    </div>
+    <div class="container hero__content">
+      <div class="hero__text">
+        <div class="hero__badge">
+          <span class="badge-dot"></span>
+          Smart Safety System Active
+        </div>
+        <h1 class="hero__title">Your Safety,<br /><span class="gradient-text">Our Priority</span></h1>
+        <p class="hero__subtitle">
+          SafeHer empowers women with real-time alerts, live location sharing,
+          emergency contact management, and AI-powered danger detection — all in one place.
+        </p>
+        <div class="hero__cta">
+          <button class="btn btn--primary" onclick="document.getElementById('sos').scrollIntoView({behavior:'smooth'})">
+            <span>🚨</span> Activate SOS
+          </button>
+          <button class="btn btn--ghost" onclick="document.getElementById('location').scrollIntoView({behavior:'smooth'})">
+            <span>📍</span> Track Location
+          </button>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__shield-wrapper">
+          <div class="shield-glow"></div>
+          <div class="hero__shield">
+            <svg viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg" class="shield-svg">
+              <path d="M100 10L20 45V105C20 155 54 198 100 212C146 198 180 155 180 105V45L100 10Z" fill="url(#heroShield)" opacity="0.15"/>
+              <path d="M100 10L20 45V105C20 155 54 198 100 212C146 198 180 155 180 105V45L100 10Z" stroke="url(#heroShieldStroke)" stroke-width="2" fill="none"/>
+              <circle cx="100" cy="100" r="30" fill="url(#innerCircle)" opacity="0.8"/>
+              <text x="100" y="110" text-anchor="middle" font-size="28" fill="white">♀</text>
+              <defs>
+                <linearGradient id="heroShield" x1="20" y1="10" x2="180" y2="212" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#c084fc"/>
+                  <stop offset="1" stop-color="#f472b6"/>
+                </linearGradient>
+                <linearGradient id="heroShieldStroke" x1="20" y1="10" x2="180" y2="212" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#c084fc"/>
+                  <stop offset="1" stop-color="#f472b6"/>
+                </linearGradient>
+                <radialGradient id="innerCircle" cx="50%" cy="50%" r="50%">
+                  <stop stop-color="#c084fc" stop-opacity="0.8"/>
+                  <stop offset="1" stop-color="#f472b6" stop-opacity="0.4"/>
+                </radialGradient>
+              </defs>
+            </svg>
+          </div>
+        </div>
+        <div class="hero__stats">
+          <div class="stat-card" id="stat-1">
+            <div class="stat-icon">🛡️</div>
+            <div class="stat-info"><strong>100%</strong><span>Secure</span></div>
+          </div>
+          <div class="stat-card" id="stat-2">
+            <div class="stat-icon">⚡</div>
+            <div class="stat-info"><strong>Instant</strong><span>Alerts</span></div>
+          </div>
+          <div class="stat-card" id="stat-3">
+            <div class="stat-icon">🤖</div>
+            <div class="stat-info"><strong>AI</strong><span>Powered</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__scroll-hint">
+      <div class="scroll-indicator">
+        <div class="scroll-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOS SECTION ===== -->
+  <section class="section" id="sos">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Emergency</span>
+        <h2 class="section__title">🚨 SOS Alert System</h2>
+        <p class="section__desc">Press and hold the SOS button for 3 seconds to trigger an emergency alert with your location.</p>
+      </div>
+
+      <div class="sos__layout">
+        <div class="sos__button-area">
+          <div class="sos__rings">
+            <div class="sos-ring ring-1"></div>
+            <div class="sos-ring ring-2"></div>
+            <div class="sos-ring ring-3"></div>
+          </div>
+          <button
+            class="sos__btn"
+            id="sosBtn"
+            onmousedown="startSosHold()"
+            onmouseup="cancelSosHold()"
+            onmouseleave="cancelSosHold()"
+            ontouchstart="startSosHold()"
+            ontouchend="cancelSosHold()"
+            aria-label="SOS Emergency Button"
+          >
+            <span class="sos__btn-icon">🆘</span>
+            <span class="sos__btn-text">HOLD FOR SOS</span>
+            <div class="sos__progress" id="sosProgress"></div>
+          </button>
+          <p class="sos__hint" id="sosHint">Hold for <strong>3 seconds</strong> to activate</p>
+        </div>
+
+        <div class="sos__info">
+          <div class="sos__status-card" id="sosStatusCard">
+            <div class="status-indicator" id="statusIndicator">
+              <div class="status-dot status-dot--idle"></div>
+              <span id="statusText">System Ready</span>
+            </div>
+            <div class="sos__log" id="sosLog">
+              <div class="log-entry log-entry--info">
+                <span class="log-time" id="logTime">--:--:--</span>
+                <span>Awaiting activation…</span>
+              </div>
+            </div>
+          </div>
+          <div class="sos__features">
+            <div class="feature-item" id="feat-1">
+              <div class="feature-icon">📍</div>
+              <div>
+                <strong>GPS Location</strong>
+                <p>Automatically captures & shares your live coordinates</p>
+              </div>
+            </div>
+            <div class="feature-item" id="feat-2">
+              <div class="feature-icon">📱</div>
+              <div>
+                <strong>Contact Alert</strong>
+                <p>Notifies all your emergency contacts instantly</p>
+              </div>
+            </div>
+            <div class="feature-item" id="feat-3">
+              <div class="feature-icon">🔔</div>
+              <div>
+                <strong>Audio Alarm</strong>
+                <p>Triggers a loud alarm to attract nearby attention</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOCATION TRACKING SECTION ===== -->
+  <section class="section section--alt" id="location">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Tracking</span>
+        <h2 class="section__title">📍 Live Location Tracking</h2>
+        <p class="section__desc">Share your real-time location with trusted contacts to stay safe on the go.</p>
+      </div>
+
+      <div class="location__layout">
+        <div class="location__map-wrapper">
+          <div class="map__container" id="mapContainer">
+            <div class="map__placeholder" id="mapPlaceholder">
+              <div class="map__pulse">
+                <div class="map__pulse-dot"></div>
+                <div class="map__pulse-ring"></div>
+              </div>
+              <p>📍 Location not yet shared</p>
+              <small>Click "Start Tracking" to begin</small>
+            </div>
+            <div class="map__embed" id="mapEmbed" style="display:none;">
+              <iframe id="mapFrame" width="100%" height="100%" frameborder="0" style="border:0;border-radius:16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Live Location Map"></iframe>
+              <div class="map__overlay">
+                <div class="map__accuracy" id="mapAccuracy">📡 Accuracy: --</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="location__panel">
+          <div class="location__coords-card" id="coordsCard">
+            <h3>📡 Current Coordinates</h3>
+            <div class="coord-item">
+              <span class="coord-label">Latitude</span>
+              <span class="coord-value" id="coordLat">--°</span>
+            </div>
+            <div class="coord-item">
+              <span class="coord-label">Longitude</span>
+              <span class="coord-value" id="coordLng">--°</span>
+            </div>
+            <div class="coord-item">
+              <span class="coord-label">Accuracy</span>
+              <span class="coord-value" id="coordAcc">-- m</span>
+            </div>
+            <div class="coord-item">
+              <span class="coord-label">Last Updated</span>
+              <span class="coord-value" id="coordTime">--</span>
+            </div>
+          </div>
+
+          <div class="location__share-card">
+            <h3>🔗 Share Location</h3>
+            <div class="share-link-wrapper">
+              <input type="text" id="shareLink" class="share-input" readonly placeholder="Your location link will appear here…" />
+              <button class="btn-copy" id="copyBtn" onclick="copyShareLink()" title="Copy link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              </button>
+            </div>
+            <div class="location__btns">
+              <button class="btn btn--primary" id="trackingBtn" onclick="toggleTracking()">
+                <span>▶</span> Start Tracking
+              </button>
+              <button class="btn btn--secondary" onclick="shareViaWhatsApp()" id="whatsappBtn">
+                <span>💬</span> Share via WhatsApp
+              </button>
+            </div>
+          </div>
+
+          <div class="location__history" id="locationHistory">
+            <h3>📜 Location Log</h3>
+            <div class="history-list" id="historyList">
+              <p class="history-empty">No history yet. Start tracking to record locations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EMERGENCY CONTACTS SECTION ===== -->
+  <section class="section" id="contacts">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Emergency</span>
+        <h2 class="section__title">📞 Emergency Contacts</h2>
+        <p class="section__desc">Add trusted people who will be notified during an SOS event.</p>
+      </div>
+
+      <div class="contacts__layout">
+        <div class="contacts__form-card" id="addContactForm">
+          <h3>➕ Add New Contact</h3>
+          <div class="form-group">
+            <label for="contactName">Full Name</label>
+            <input type="text" id="contactName" placeholder="e.g. Mom, Priya, Riya…" maxlength="30" />
+          </div>
+          <div class="form-group">
+            <label for="contactPhone">Phone Number</label>
+            <input type="tel" id="contactPhone" placeholder="+91 98765 43210" maxlength="15" />
+          </div>
+          <div class="form-group">
+            <label for="contactRelation">Relationship</label>
+            <select id="contactRelation">
+              <option value="Family">👨‍👩‍👧 Family</option>
+              <option value="Friend">👯 Friend</option>
+              <option value="Partner">💑 Partner</option>
+              <option value="Colleague">💼 Colleague</option>
+              <option value="Other">🙋 Other</option>
+            </select>
+          </div>
+          <button class="btn btn--primary full-width" id="addContactBtn" onclick="addContact()">
+            ➕ Add Contact
+          </button>
+          <div class="contacts__quick">
+            <p>Quick Dial Emergency Numbers:</p>
+            <div class="quick-numbers">
+              <a href="tel:100" class="quick-num-btn" id="qn-police">🚔 100 Police</a>
+              <a href="tel:1091" class="quick-num-btn" id="qn-women">👩 1091 Women</a>
+              <a href="tel:112" class="quick-num-btn" id="qn-emergency">🆘 112 Emergency</a>
+              <a href="tel:102" class="quick-num-btn" id="qn-ambulance">🚑 102 Ambulance</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contacts__list-area">
+          <div class="contacts__list-header">
+            <h3>👥 My Emergency Contacts</h3>
+            <span class="contact-count" id="contactCount">0 contacts</span>
+          </div>
+          <div class="contacts__list" id="contactsList">
+            <div class="contacts__empty" id="contactsEmpty">
+              <div class="empty-icon">📭</div>
+              <p>No contacts added yet.</p>
+              <small>Add your trusted people to the left.</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AI DETECTION SECTION ===== -->
+  <section class="section section--alt" id="ai-detect">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">AI Powered</span>
+        <h2 class="section__title">🤖 AI Danger Detection</h2>
+        <p class="section__desc">Speak or type your situation. Our AI analyzes keywords to detect potential danger and suggests actions.</p>
+      </div>
+
+      <div class="ai__layout">
+        <div class="ai__input-area">
+          <div class="ai__mic-section">
+            <button class="ai__mic-btn" id="micBtn" onclick="toggleVoice()" aria-label="Voice Input">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mic-icon">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+              <span class="mic-label" id="micLabel">Tap to Speak</span>
+            </button>
+            <div class="mic-wave" id="micWave">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+
+          <div class="ai__text-input">
+            <textarea
+              id="aiInput"
+              placeholder="Type your situation here… e.g. 'I need help, someone is following me'"
+              rows="4"
+              maxlength="500"
+              oninput="analyzeText()"
+            ></textarea>
+            <div class="char-count"><span id="charCount">0</span>/500</div>
+          </div>
+
+          <button class="btn btn--primary full-width" onclick="analyzeText(true)" id="analyzeBtn">
+            🔍 Analyze Situation
+          </button>
+        </div>
+
+        <div class="ai__result-area">
+          <div class="ai__result-card" id="aiResultCard">
+            <div class="ai__status-idle" id="aiIdle">
+              <div class="ai__brain-anim">
+                <div class="brain-pulse">🧠</div>
+              </div>
+              <p>AI analysis will appear here…</p>
+              <small>Speak or type a message to begin</small>
+            </div>
+
+            <div class="ai__result" id="aiResult" style="display:none;">
+              <div class="ai__threat-meter">
+                <div class="threat-label">
+                  <span>Threat Level</span>
+                  <span class="threat-badge" id="threatBadge">--</span>
+                </div>
+                <div class="threat-bar">
+                  <div class="threat-fill" id="threatFill"></div>
+                </div>
+              </div>
+
+              <div class="ai__detected-words" id="detectedWordsArea">
+                <h4>🔍 Detected Keywords:</h4>
+                <div class="keyword-tags" id="keywordTags"></div>
+              </div>
+
+              <div class="ai__recommendation" id="aiRecommendation">
+                <h4>💡 Recommended Action:</h4>
+                <p id="recText"></p>
+              </div>
+
+              <div class="ai__quick-actions" id="aiQuickActions">
+                <button class="btn btn--danger" onclick="triggerSOS()" id="aiSosBtn">🚨 Trigger SOS</button>
+                <button class="btn btn--secondary" onclick="document.getElementById('location').scrollIntoView({behavior:'smooth'})" id="aiLocationBtn">📍 Share Location</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ai__keywords-reference" id="aiKeywordsRef">
+            <h4>🗝️ Monitored Keywords</h4>
+            <div class="keywords-grid" id="keywordsGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SAFETY TIPS SECTION ===== -->
+  <section class="section" id="tips">
+    <div class="container">
+      <div class="section__header">
+        <span class="section__tag">Awareness</span>
+        <h2 class="section__title">📚 Safety Awareness & Tips</h2>
+        <p class="section__desc">Knowledge is your first line of defense. Stay informed and stay safe.</p>
+      </div>
+
+      <div class="tips__filter">
+        <button class="filter-btn active" id="filter-all" onclick="filterTips('all', this)">All</button>
+        <button class="filter-btn" id="filter-travel" onclick="filterTips('travel', this)">🚌 Travel</button>
+        <button class="filter-btn" id="filter-digital" onclick="filterTips('digital', this)">💻 Digital</button>
+        <button class="filter-btn" id="filter-home" onclick="filterTips('home', this)">🏠 Home</button>
+        <button class="filter-btn" id="filter-emergency" onclick="filterTips('emergency', this)">🚨 Emergency</button>
+      </div>
+
+      <div class="tips__grid" id="tipsGrid"></div>
+
+      <div class="tips__quiz-card" id="safetyQuiz">
+        <div class="quiz__header">
+          <h3>🎯 Safety Knowledge Quiz</h3>
+          <p>Test your safety knowledge with a quick quiz!</p>
+        </div>
+        <div class="quiz__body" id="quizBody">
+          <div class="quiz__question" id="quizQuestion"></div>
+          <div class="quiz__options" id="quizOptions"></div>
+          <div class="quiz__feedback" id="quizFeedback" style="display:none;"></div>
+          <div class="quiz__nav">
+            <span class="quiz__progress" id="quizProgress">Question 1 of 5</span>
+            <button class="btn btn--primary" id="nextQuizBtn" onclick="nextQuizQuestion()" style="display:none;">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="nav__logo-icon" style="width:36px;height:36px;">
+            <svg viewBox="0 0 40 40" fill="none"><path d="M20 3L4 10V21C4 29.8 11 38.1 20 40C29 38.1 36 29.8 36 21V10L20 3Z" fill="url(#footShield)"/><circle cx="20" cy="19" r="5" fill="white" opacity="0.9"/><line x1="20" y1="24" x2="20" y2="29" stroke="white" stroke-width="2.5" stroke-linecap="round"/><line x1="16" y1="27" x2="24" y2="27" stroke="white" stroke-width="2.5" stroke-linecap="round"/><defs><linearGradient id="footShield" x1="4" y1="3" x2="36" y2="40"><stop stop-color="#c084fc"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs></svg>
+          </div>
+          <div>
+            <h4>SafeHer</h4>
+            <p>Every woman deserves to feel safe.</p>
+          </div>
+        </div>
+        <div class="footer__emergency">
+          <p>🆘 Emergency Hotlines</p>
+          <div class="footer__hotlines">
+            <a href="tel:100">Police: 100</a>
+            <a href="tel:1091">Women: 1091</a>
+            <a href="tel:112">Emergency: 112</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>Built with ❤️ for women's safety. Always trust your instincts.</p>
+        <p class="footer__disclaimer">⚠️ This app is a safety aid. Always contact local authorities in life-threatening situations.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== SOS OVERLAY ===== -->
+  <div class="sos__overlay" id="sosOverlay" style="display:none;">
+    <div class="sos__overlay-content">
+      <div class="sos__overlay-icon">🚨</div>
+      <h2>SOS ACTIVATED!</h2>
+      <p>Emergency alert sent to all your contacts.</p>
+      <div class="sos__overlay-location" id="sosLocation"></div>
+      <button class="btn btn--ghost" onclick="dismissSOS()" id="dismissSosBtn">✕ Cancel SOS</button>
+    </div>
+  </div>
+
+  <!-- ===== TOAST NOTIFICATION ===== -->
+  <div class="toast__container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – AI Danger Detection{% endblock %}
+
+{% block content %}
+<section class="section" id="ai-detect" style="min-height:90vh;padding-top:6rem;">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">AI Powered</span>
+      <h2 class="section__title">🤖 AI Danger Detection</h2>
+      <p class="section__desc">Speak or type your situation. Our AI analyzes keywords to detect potential danger and suggests actions.</p>
+    </div>
+
+    <div class="ai__layout">
+      <div class="ai__input-area">
+        <div class="ai__mic-section">
+          <button class="ai__mic-btn" id="micBtn" onclick="toggleVoice()" aria-label="Voice Input">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mic-icon">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
+            <span class="mic-label" id="micLabel">Tap to Speak</span>
+          </button>
+          <div class="mic-wave" id="micWave">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+
+        <div class="ai__text-input">
+          <textarea id="aiInput" placeholder="Type your situation here… e.g. 'I need help, someone is following me'" rows="4" maxlength="500" oninput="updateCharCount()"></textarea>
+          <div class="char-count"><span id="charCount">0</span>/500</div>
+        </div>
+
+        <button class="btn btn--primary full-width" onclick="analyzeText()" id="analyzeBtn">🔍 Analyze Situation</button>
+      </div>
+
+      <div class="ai__result-area">
+        <div class="ai__result-card" id="aiResultCard">
+          <div class="ai__status-idle" id="aiIdle">
+            <div class="ai__brain-anim"><div class="brain-pulse">🧠</div></div>
+            <p>AI analysis will appear here…</p>
+            <small>Speak or type a message to begin</small>
+          </div>
+          <div class="ai__result" id="aiResult" style="display:none;">
+            <div class="ai__threat-meter">
+              <div class="threat-label">
+                <span>Threat Level</span>
+                <span class="threat-badge" id="threatBadge">--</span>
+              </div>
+              <div class="threat-bar"><div class="threat-fill" id="threatFill"></div></div>
+            </div>
+            <div class="ai__detected-words" id="detectedWordsArea">
+              <h4>🔍 Detected Keywords:</h4>
+              <div class="keyword-tags" id="keywordTags"></div>
+            </div>
+            <div class="ai__recommendation" id="aiRecommendation">
+              <h4>💡 Recommended Action:</h4>
+              <p id="recText"></p>
+            </div>
+            <div class="ai__quick-actions" id="aiQuickActions" style="display:none;">
+              <a href="{{ url_for('sos') }}" class="btn btn--danger">🚨 Trigger SOS</a>
+              <a href="{{ url_for('location') }}" class="btn btn--secondary">📍 Share Location</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="ai__keywords-reference" id="aiKeywordsRef">
+          <h4>🗝️ Monitored Keywords</h4>
+          <div class="keywords-grid">
+            {% for kw in keywords %}
+            <span class="kw-chip">{{ kw }}</span>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function updateCharCount() {
+    document.getElementById('charCount').textContent = document.getElementById('aiInput').value.length;
+  }
+
+  async function analyzeText() {
+    const text = document.getElementById('aiInput').value.trim();
+    if (!text) { showToast('Type or speak something first', 'error'); return; }
+    const res = await fetch('/api/analyze', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({text})
+    });
+    const data = await res.json();
+    const cls = {0:'badge-safe',1:'badge-safe',2:'badge-medium',3:'badge-high',4:'badge-critical'};
+    document.getElementById('aiIdle').style.display = 'none';
+    document.getElementById('aiResult').style.display = 'block';
+    document.getElementById('threatBadge').textContent = data.label;
+    document.getElementById('threatBadge').className = 'threat-badge ' + cls[data.level];
+    document.getElementById('threatFill').style.width = data.percent + '%';
+    document.getElementById('keywordTags').innerHTML = data.found.length
+      ? data.found.map(w => `<span class="keyword-tag">${w}</span>`).join('')
+      : '<span style="color:#64748b;font-size:.85rem">No danger keywords found</span>';
+    document.getElementById('recText').textContent = data.recommendation;
+    document.getElementById('aiQuickActions').style.display = data.level >= 3 ? 'flex' : 'none';
+  }
+</script>
+{% endblock %}

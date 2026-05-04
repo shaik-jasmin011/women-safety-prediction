@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – Live Location{% endblock %}
+
+{% block content %}
+<section class="section" id="location" style="min-height:90vh;padding-top:6rem;">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">Tracking</span>
+      <h2 class="section__title">📍 Live Location Tracking</h2>
+      <p class="section__desc">Share your real-time location with trusted contacts to stay safe on the go.</p>
+    </div>
+
+    <div class="location__layout">
+      <div class="location__map-wrapper">
+        <div class="map__container" id="mapContainer">
+          <div class="map__placeholder" id="mapPlaceholder">
+            <div class="map__pulse">
+              <div class="map__pulse-dot"></div>
+              <div class="map__pulse-ring"></div>
+            </div>
+            <p>📍 Location not yet shared</p>
+            <small>Click "Start Tracking" to begin</small>
+          </div>
+          <div class="map__embed" id="mapEmbed" style="display:none;">
+            <iframe id="mapFrame" width="100%" height="100%" frameborder="0" style="border:0;border-radius:16px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Live Location Map"></iframe>
+            <div class="map__overlay">
+              <div class="map__accuracy" id="mapAccuracy">📡 Accuracy: --</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="location__panel">
+        <div class="location__coords-card" id="coordsCard">
+          <h3>📡 Current Coordinates</h3>
+          <div class="coord-item"><span class="coord-label">Latitude</span><span class="coord-value" id="coordLat">--°</span></div>
+          <div class="coord-item"><span class="coord-label">Longitude</span><span class="coord-value" id="coordLng">--°</span></div>
+          <div class="coord-item"><span class="coord-label">Accuracy</span><span class="coord-value" id="coordAcc">-- m</span></div>
+          <div class="coord-item"><span class="coord-label">Last Updated</span><span class="coord-value" id="coordTime">--</span></div>
+        </div>
+
+        <div class="location__share-card">
+          <h3>🔗 Share Location</h3>
+          <div class="share-link-wrapper">
+            <input type="text" id="shareLink" class="share-input" readonly placeholder="Your location link will appear here…" />
+            <button class="btn-copy" id="copyBtn" onclick="copyShareLink()" title="Copy link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            </button>
+          </div>
+          <div class="location__btns">
+            <button class="btn btn--primary" id="trackingBtn" onclick="toggleTracking()"><span>▶</span> Start Tracking</button>
+            <button class="btn btn--secondary" onclick="shareViaWhatsApp()" id="whatsappBtn"><span>💬</span> Share via WhatsApp</button>
+          </div>
+        </div>
+
+        <div class="location__history" id="locationHistory">
+          <h3>📜 Location Log</h3>
+          <div class="history-list" id="historyList">
+            <p class="history-empty">No history yet. Start tracking to record locations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

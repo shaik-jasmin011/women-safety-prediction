@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – Emergency Contacts{% endblock %}
+
+{% block content %}
+<section class="section" id="contacts" style="min-height:90vh;padding-top:6rem;">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">Emergency</span>
+      <h2 class="section__title">📞 Emergency Contacts</h2>
+      <p class="section__desc">Add trusted people who will be notified during an SOS event.</p>
+    </div>
+
+    <div class="contacts__layout">
+      <!-- ADD FORM -->
+      <div class="contacts__form-card" id="addContactForm">
+        <h3>➕ Add New Contact</h3>
+        <div class="form-group">
+          <label for="contactName">Full Name</label>
+          <input type="text" id="contactName" placeholder="e.g. Mom, Priya, Riya…" maxlength="30" />
+        </div>
+        <div class="form-group">
+          <label for="contactPhone">Phone Number</label>
+          <input type="tel" id="contactPhone" placeholder="+91 98765 43210" maxlength="15" />
+        </div>
+        <div class="form-group">
+          <label for="contactRelation">Relationship</label>
+          <select id="contactRelation">
+            <option value="Family">👨‍👩‍👧 Family</option>
+            <option value="Friend">👯 Friend</option>
+            <option value="Partner">💑 Partner</option>
+            <option value="Colleague">💼 Colleague</option>
+            <option value="Other">🙋 Other</option>
+          </select>
+        </div>
+        <button class="btn btn--primary full-width" id="addContactBtn" onclick="addContact()">➕ Add Contact</button>
+
+        <div class="contacts__quick">
+          <p>Quick Dial Emergency Numbers:</p>
+          <div class="quick-numbers">
+            <a href="tel:100" class="quick-num-btn">🚔 100 Police</a>
+            <a href="tel:1091" class="quick-num-btn">👩 1091 Women</a>
+            <a href="tel:112" class="quick-num-btn">🆘 112 Emergency</a>
+            <a href="tel:102" class="quick-num-btn">🚑 102 Ambulance</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT LIST -->
+      <div class="contacts__list-area">
+        <div class="contacts__list-header">
+          <h3>👥 My Emergency Contacts</h3>
+          <span class="contact-count" id="contactCount">0 contacts</span>
+        </div>
+        <div class="contacts__list" id="contactsList">
+          {% if contacts %}
+            {% for c in contacts %}
+            <div class="contact-card" id="card-{{ c.id }}">
+              <div class="contact-info">
+                <strong>{{ c.name }}</strong>
+                <span>{{ c.phone }} · {{ c.relation }}</span>
+              </div>
+              <div class="contact-actions">
+                <a href="tel:{{ c.phone }}" class="btn-icon" title="Call">📞</a>
+                <button class="btn-icon" onclick="deleteContact({{ c.id }})" title="Delete">🗑️</button>
+              </div>
+            </div>
+            {% endfor %}
+          {% else %}
+          <div class="contacts__empty" id="contactsEmpty">
+            <div class="empty-icon">📭</div>
+            <p>No contacts added yet.</p>
+            <small>Add your trusted people to the left.</small>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Update count on load
+  document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.contact-card').length;
+    document.getElementById('contactCount').textContent = cards + (cards === 1 ? ' contact' : ' contacts');
+  });
+
+  async function addContact() {
+    const name  = document.getElementById('contactName').value.trim();
+    const phone = document.getElementById('contactPhone').value.trim();
+    const rel   = document.getElementById('contactRelation').value;
+    if (!name || !phone) { showToast('Fill in name and phone', 'error'); return; }
+    const res = await fetch('/api/contacts', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({name, phone, relation: rel})
+    });
+    const data = await res.json();
+    if (data.error) { showToast(data.error, 'error'); return; }
+    document.getElementById('contactName').value = '';
+    document.getElementById('contactPhone').value = '';
+    const c = data.contact;
+    const empty = document.getElementById('contactsEmpty');
+    if (empty) empty.remove();
+    const list = document.getElementById('contactsList');
+    list.insertAdjacentHTML('beforeend', `
+      <div class="contact-card" id="card-${c.id}">
+        <div class="contact-info">
+          <strong>${c.name}</strong>
+          <span>${c.phone} · ${c.relation}</span>
+        </div>
+        <div class="contact-actions">
+          <a href="tel:${c.phone}" class="btn-icon" title="Call">📞</a>
+          <button class="btn-icon" onclick="deleteContact(${c.id})" title="Delete">🗑️</button>
+        </div>
+      </div>`);
+    const cnt = document.querySelectorAll('.contact-card').length;
+    document.getElementById('contactCount').textContent = cnt + (cnt===1?' contact':' contacts');
+    showToast('✅ ' + c.name + ' added', 'success');
+  }
+
+  async function deleteContact(id) {
+    await fetch('/api/contacts/' + id, {method: 'DELETE'});
+    const card = document.getElementById('card-' + id);
+    if (card) card.remove();
+    const cnt = document.querySelectorAll('.contact-card').length;
+    document.getElementById('contactCount').textContent = cnt + (cnt===1?' contact':' contacts');
+    if (cnt === 0) {
+      document.getElementById('contactsList').innerHTML = `<div class="contacts__empty" id="contactsEmpty"><div class="empty-icon">📭</div><p>No contacts added yet.</p><small>Add your trusted people to the left.</small></div>`;
+    }
+    showToast('Contact removed', 'info');
+  }
+</script>
+{% endblock %}

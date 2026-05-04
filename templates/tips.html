@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}SafeHer – Safety Tips{% endblock %}
+
+{% block content %}
+<section class="section" id="tips" style="min-height:90vh;padding-top:6rem;">
+  <div class="container">
+    <div class="section__header">
+      <span class="section__tag">Awareness</span>
+      <h2 class="section__title">📚 Safety Awareness & Tips</h2>
+      <p class="section__desc">Knowledge is your first line of defense. Stay informed and stay safe.</p>
+    </div>
+
+    <div class="tips__filter">
+      <button class="filter-btn active" onclick="filterTips('all', this)">All</button>
+      <button class="filter-btn" onclick="filterTips('travel', this)">🚌 Travel</button>
+      <button class="filter-btn" onclick="filterTips('digital', this)">💻 Digital</button>
+      <button class="filter-btn" onclick="filterTips('home', this)">🏠 Home</button>
+      <button class="filter-btn" onclick="filterTips('emergency', this)">🚨 Emergency</button>
+    </div>
+
+    <div class="tips__grid" id="tipsGrid"></div>
+
+    <div class="tips__quiz-card" id="safetyQuiz">
+      <div class="quiz__header">
+        <h3>🎯 Safety Knowledge Quiz</h3>
+        <p>Test your safety knowledge with a quick quiz!</p>
+      </div>
+      <div class="quiz__body" id="quizBody">
+        <div class="quiz__question" id="quizQuestion"></div>
+        <div class="quiz__options" id="quizOptions"></div>
+        <div class="quiz__feedback" id="quizFeedback" style="display:none;"></div>
+        <div class="quiz__nav">
+          <span class="quiz__progress" id="quizProgress">Question 1 of 5</span>
+          <button class="btn btn--primary" id="nextQuizBtn" onclick="nextQuizQuestion()" style="display:none;">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    renderTips('all');
+    renderQuiz();
+  });
+</script>
+{% endblock %}
